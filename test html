@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Discord送信テスト</title>
+</head>
+<body>
+
+  <form id="discord-form">
+    <input type="text" id="message-input" placeholder="メッセージを入力" required>
+    <button type="submit">送信</button>
+  </form>
+
+  <script>
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1541784654326136873/ygFhAT3XQwgSGsnMrn19c-6DFLkYt_TefUumfCvUn9Si_bqgofHhjkPzQZyzgkXlhxu%22;  
+
+    document.getElementById('discord-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = document.getElementById('message-input').value;
+
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: message
+          })
+        });
+
+        if (response.ok) {
+          alert('Discordに送信されました！');
+        } else {
+          alert('送信エラー: ' + response.status);...
